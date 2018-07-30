@@ -24,10 +24,13 @@ from .db import PasswordEntry
 from .. import current_minibuffer
 from .prompt import SavePasswordPrompt
 
-FormData = namedtuple(
-    "FormData",
-    ("url", "username", "password", "data")
-)
+
+class FormData:
+    def __init__(self, url=None, username=None, password=None, data=None):
+        self.url = url
+        self.username = username
+        self.password = password
+        self.data = data
 
 
 def create_host(url):

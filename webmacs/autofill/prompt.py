@@ -26,16 +26,11 @@ class SavePasswordPrompt(YesNoPrompt):
         self.closed.connect(self.__on_closed)
 
     def __on_closed(self):
-        # late import to avoid cyclic dependencies
-        from . import FormData
         self.deleteLater()
         if self.value() == YesNoPrompt.NEVER:
             # save the form with no password or data
-            self.formdata = FormData(
-                url=self.formdata.url,
-                username=self.formdata.username,
-                password=None,
-                data=None)
+            self.formdata.password = ""
+            self.formdata.data = ""
             self.autofill.add_form_entry(self.buffer.url(), self.formdata)
         elif self.value() == YesNoPrompt.YES:
             self.autofill.add_form_entry(self.buffer.url(), self.formdata)
